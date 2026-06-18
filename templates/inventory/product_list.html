@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+
+  <div class="alert alert-warning text-center mt-4">
+    <h5 class="mb-1">Please login to view Products</h5>
+    <p class="mb-0 text-muted">Use the login button from the top-right corner.</p>
+  </div>
+
+{% else %}
+
+<h2 class="mb-3">Products</h2>
+<a class="btn btn-primary mb-2" href="{% url 'inventory:product_add' %}">Add Product</a>
+<a class="btn btn-secondary mb-2" href="{% url 'inventory:category_list' %}">Categories</a>
+
+<table class="table table-bordered table-hover align-middle mt-2">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Category</th>
+      <th>Price</th>
+      <th>Qty</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in products %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.category|default:"No category" }}</td>
+        <td>{{ p.price }}</td>
+        <td>{{ p.quantity }}</td>
+        <td>
+          <a class="btn btn-sm btn-warning" href="{% url 'inventory:product_edit' p.id %}">Edit</a>
+          <a class="btn btn-sm btn-danger" href="{% url 'inventory:product_delete' p.id %}">Delete</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="6" class="text-center text-muted">No products yet.</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}
+
+

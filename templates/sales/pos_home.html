@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% if not user.is_authenticated %}
+<div class="alert alert-warning text-center">
+  <h5>Please login to use Point of Sale</h5>
+</div>
+{% else %}
+
+<h2>Point of Sale</h2>
+
+<!-- Search Bar -->
+<form method="get" class="mb-3">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="Search product..." value="{{ search_query }}">
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+  </div>
+</form>
+
+<form method="post" action="{% url 'sales:checkout' %}">
+  {% csrf_token %}
+
+  <h4>Customer Details (Optional)</h4>
+  <input class="form-control mb-2" type="text" name="name" placeholder="Name" />
+  <input class="form-control mb-2" type="text" name="phone" placeholder="Phone" />
+  <input class="form-control mb-2" type="email" name="email" placeholder="Email" />
+
+  <h4>Products</h4>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Price</th>
+        <th>Available</th>
+        <th>Qty</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for p in products %}
+      <tr>
+        <td>{{ p.name }}</td>
+        <td>{{ p.price }}</td>
+        <td>{{ p.quantity }}</td>
+        <td>
+          <input class="form-control" type="number" name="product_{{ p.id }}" min="0" max="{{ p.quantity }}" value="0">
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="4">No products found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <button class="btn btn-primary" type="submit">Checkout</button>
+</form>
+
+{% endif %}
+
+{% endblock %}

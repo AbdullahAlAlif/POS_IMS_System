@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Receipt - Sale {{ sale.id }}</h2>
+<p>Date: {{ sale.created_at }}</p>
+<p>Customer: {{ sale.customer }}</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Product</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Line Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in sale.items.all %}
+    <tr>
+      <td>{{ item.product.name }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.line_total }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<h4>Total: {{ sale.total_amount }}</h4>
+<button onclick="window.print()" class="btn btn-secondary">Print Receipt</button>
+{% endblock %}

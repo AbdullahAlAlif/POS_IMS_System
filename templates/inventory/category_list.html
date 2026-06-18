@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Categories</h2>
+<a class="btn btn-primary" href="{% url 'inventory:category_add' %}">Add Category</a>
+<table class="table mt-3">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for c in categories %}
+<tr>
+  <td>{{ forloop.counter }}</td>   <!-- 1, 2, 3 ... instead of database id -->
+  <td>{{ c.name }}</td>
+  <td>
+    <a class="btn btn-sm btn-warning" href="{% url 'inventory:category_edit' c.id %}">Edit</a>
+    <a class="btn btn-sm btn-danger" href="{% url 'inventory:category_delete' c.id %}">Delete</a>
+  </td>
+</tr>
+    {% empty %}
+    <tr><td colspan="3">No categories yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

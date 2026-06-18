@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if not user.is_authenticated %}
+
+  <div class="alert alert-warning text-center mt-4">
+    <h5 class="mb-1">Please login to view Suppliers</h5>
+    <p class="mb-0 text-muted">Use the login button from the top-right corner.</p>
+  </div>
+
+{% else %}
+
+<h2 class="mb-4">Suppliers</h2>
+
+<a class="btn btn-primary mb-3" href="{% url 'suppliers:supplier_add' %}">Add Supplier</a>
+
+<table class="table table-bordered table-hover align-middle">
+  <thead class="table-light">
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Info</th>
+      <th>Product</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for s in suppliers %}
+    <tr>
+      <td>{{ s.id }}</td>
+      <td>{{ s.name }}</td>
+      <td>{{ s.contact_info }}</td>
+      <td>{{ s.product|default:"No product" }}</td>
+      <td>
+        <a class="btn btn-sm btn-warning" href="{% url 'suppliers:supplier_edit' s.id %}">Edit</a>
+        <a class="btn btn-sm btn-danger" href="{% url 'suppliers:supplier_delete' s.id %}">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="5" class="text-center text-muted">No suppliers yet.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}

@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mehnuva Fashion</title>
+    <link class="bootstrap-css" rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Body and General Styles */
+        body {
+            background-color: #f5f6fa;
+            /* light, clean background */
+            color: #2f3640;
+            /* dark text for readability */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .bg-light-gray {
+            background-color: #f5f6fa;
+        }
+
+        /* Sidebar Custom Styling */
+        .bg-sidebar {
+            background: linear-gradient(180deg, #1e272e 0%, #2f3640 100%) !important;
+            /* Elegant slate dark gradient */
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        @media (min-width: 992px) {
+            .bg-sidebar {
+                width: 280px;
+                height: 100vh;
+                position: sticky;
+                top: 0;
+            }
+
+            .sidebar-container {
+                width: 280px;
+            }
+        }
+
+        .sidebar-brand {
+            padding: 1.5rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .sidebar-brand svg {
+            color: #ffeaa7;
+            /* Gold accent on CPU icon */
+        }
+
+        /* Sidebar Navigation Items */
+        .nav-link-custom {
+            display: flex;
+            align-items: center;
+            padding: 0.85rem 1.5rem;
+            color: rgba(255, 255, 255, 0.7) !important;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease-in-out;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-link-custom svg {
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .nav-link-custom:hover {
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.04);
+            border-left-color: #74b9ff;
+            /* blue hover highlight */
+        }
+
+        .nav-link-custom:hover svg {
+            transform: scale(1.1);
+        }
+
+        .nav-link-custom.active {
+            color: #ffffff !important;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-left-color: #ffeaa7;
+            /* gold active page highlight */
+            font-weight: 600;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background-color: #0984e3;
+            border-color: #0984e3;
+        }
+
+        .btn-primary:hover {
+            background-color: #74b9ff;
+            border-color: #74b9ff;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th {
+            background-color: #0984e3;
+            color: #fff;
+        }
+
+        table td,
+        table th {
+            padding: 10px;
+            border: 1px solid #dcdde1;
+        }
+
+        /* Alerts */
+        .alert {
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+        /* Form inputs */
+        input,
+        select,
+        textarea {
+            border-radius: 4px;
+            border: 1px solid #dcdde1;
+            padding: 6px 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="d-flex min-vh-100 flex-column flex-lg-row">
+
+        <!-- Mobile Header (Visible only below lg) -->
+        <header class="navbar navbar-dark bg-dark d-lg-none px-3 py-2 shadow-sm flex-shrink-0">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#sidebarMenu" aria-controls="sidebarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="navbar-brand fw-bold text-white ms-2" href="/">Mehnuva Fasion</a>
+            <div style="width: 40px;"></div> <!-- visual spacer -->
+        </header>
+
+        <!-- Sidebar -->
+        <div class="offcanvas-lg offcanvas-start bg-sidebar text-white flex-shrink-0" tabindex="-1" id="sidebarMenu"
+            aria-labelledby="sidebarMenuLabel">
+            <div
+                class="offcanvas-header d-lg-none border-bottom border-light border-opacity-10 py-3 px-4 flex-shrink-0">
+                <h5 class="offcanvas-title fw-bold text-white d-flex align-items-center" id="sidebarMenuLabel">
+
+                    <span>Mehnuva Fashion</span>
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    data-bs-target="#sidebarMenu" aria-label="Close"></button>
+            </div>
+
+            <div class="d-flex flex-column h-100 sidebar-container">
+                <!-- Brand / Logo (Visible on Desktop) -->
+                <div class="sidebar-brand d-none d-lg-block flex-shrink-0">
+                    <a href="/" class="d-flex align-items-center text-white text-decoration-none">
+
+                        <span class="fs-5 fw-bold tracking-wide">Mehnuva Fashio</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="sidebar-menu flex-grow-1 py-3 overflow-y-auto">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link-custom d-flex align-items-center {% if '/products/' in request.path or '/product/' in request.path or request.path == '/' %}active{% endif %}"
+                                href="{% url 'inventory:product_list' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    class="bi bi-box-seam me-3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.962L10.4 2.05 8.186 1.113zM10.8 2.21 4.296 4.812 8 6.294l6.704-2.682L10.8 2.21zm.351 1.29L4.2 6.136V13.5l6.951-2.78V3.5zm-8.302.502v8.214l6.95 2.78V7.5L2.85 4.002z" />
+                                </svg>
+                                <span>Products</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-custom d-flex align-items-center {% if '/stock/' in request.path %}active{% endif %}"
+                                href="{% url 'inventory:stock_view' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    class="bi bi-clipboard-data me-3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M4 11a1 1 0 1 1 2 0v1a1 1 0 1 1-2 0v-1zm6-4a1 1 0 1 1 2 0v5a1 1 0 1 1-2 0V7zM7 9a1 1 0 1 1 2 0v3a1 1 0 1 1-2 0V9z" />
+                                    <path
+                                        d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                    <path
+                                        d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                </svg>
+                                <span>View Stock</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-custom d-flex align-items-center {% if '/pos/' in request.path or '/checkout/' in request.path or '/receipt/' in request.path %}active{% endif %}"
+                                href="{% url 'sales:pos_home' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    class="bi bi-cart me-3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                </svg>
+                                <span>Point of Sale</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-custom d-flex align-items-center {% if '/history/' in request.path %}active{% endif %}"
+                                href="{% url 'sales:sales_history' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    class="bi bi-receipt me-3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M1.92.506a.5.5 0 0 1 .434.14L3 1.293l.646-.647a.5.5 0 0 1 .708 0L5 1.293l.646-.647a.5.5 0 0 1 .708 0L7 1.293l.646-.647a.5.5 0 0 1 .708 0L9 1.293l.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .801.13l.5 1a.5.5 0 0 1 1.5 2v12a.5.5 0 0 1-.053.224l-.5 1a.5.5 0 0 1-.8.13L13 14.707l-.646.647a.5.5 0 0 1-.708 0L11 14.707l-.646.647a.5.5 0 0 1-.708 0L9 14.707l-.646.647a.5.5 0 0 1-.708 0L7 14.707l-.646.647a.5.5 0 0 1-.708 0L5 14.707l-.646.647a.5.5 0 0 1-.708 0L3 14.707l-.646.647a.5.5 0 0 1-.801-.13l-.5-1a.5.5 0 0 1 1 13V2a.5.5 0 0 1 .053-.224l.5-1a.5.5 0 0 1 .367-.27zm.217 1.338L2 2.118v11.764l.137.274.51-.51a.5.5 0 0 1 .707 0l.646.647.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.646.646.646-.646a.5.5 0 0 1 .708 0l.509.509.137-.274V2.118l-.137-.274-.51.51a.5.5 0 0 1-.707 0L12 1.707l-.646.647a.5.5 0 0 1-.708 0L10 1.707l-.646.647a.5.5 0 0 1-.708 0L8 1.707l-.646.647a.5.5 0 0 1-.708 0L6 1.707l-.646.647a.5.5 0 0 1-.708 0L4 1.707l-.646.647a.5.5 0 0 1-.708 0l-.509-.51z" />
+                                    <path
+                                        d="M3 4.5a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 1 1 0 1h-6a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5zM11.5 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm0 4a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z" />
+                                </svg>
+                                <span>Sales History</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-custom d-flex align-items-center {% if '/summary/' in request.path %}active{% endif %}"
+                                href="{% url 'sales:sales_summary' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    class="bi bi-graph-up me-3" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd"
+                                        d="M0 0h1v15h15v1H0V0Zm14.817 3.113a.5.5 0 0 1 .07.704l-4.5 5.5a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61 4.15-5.073a.5.5 0 0 1 .704-.07Z" />
+                                </svg>
+                                <span>Sales Summary</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link-custom d-flex align-items-center {% if '/suppliers/' in request.path or '/supplier/' in request.path %}active{% endif %}"
+                                href="{% url 'suppliers:supplier_list' %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                                    class="bi bi-people me-3" viewBox="0 0 16 16">
+                                    <path
+                                        d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8Zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022ZM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0ZM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.047 1.09-2.904.243-.294.526-.569.846-.816ZM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724C2.307 10.64 3.279 10 5 10c.002 0 .004 0 .006 0L4.92 10Zm-2-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0Zm3-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z" />
+                                </svg>
+                                <span>Suppliers</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Bottom User Section -->
+                <div class="sidebar-user border-top border-light border-opacity-10 p-3 mt-auto flex-shrink-0">
+                    {% if user.is_authenticated %}
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="text-truncate me-2">
+                            <div class="small text-white text-opacity-50">Logged in as</div>
+                            <div class="fw-bold text-white text-truncate"
+                                title="{{ user.email|default:user.username }}">{{ user.email|default:user.username }}
+                            </div>
+                        </div>
+                        <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-light border-0 px-2" title="Logout">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd"
+                                    d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                <path fill-rule="evenodd"
+                                    d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                            </svg>
+                        </a>
+                    </div>
+                    {% else %}
+                    <a href="{% url 'login' %}"
+                        class="btn btn-outline-light w-100 py-2 d-flex align-items-center justify-content-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-box-arrow-in-right me-2" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                            <path fill-rule="evenodd"
+                                d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                        </svg>
+                        <span>Login</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="flex-grow-1 min-vh-100 d-flex flex-column bg-light-gray">
+            <main class="container-fluid px-4 py-4 flex-grow-1">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+
+    </div>
+
+    <!-- Bootstrap JS bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
