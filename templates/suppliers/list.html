@@ -27,10 +27,10 @@
   </thead>
   <tbody>
     {% for s in suppliers %}
-    <tr>
+    <tr >
       <td>{{ s.id }}</td>
       <td>{{ s.name }}</td>
-      <td>{{ s.contact_info }}</td>
+      <td >{{ s.contact_info }}</td>
       <td>{{ s.product|default:"No product" }}</td>
       <td>
         <a class="btn btn-sm btn-warning" href="{% url 'suppliers:supplier_edit' s.id %}">Edit</a>

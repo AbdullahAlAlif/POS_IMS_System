@@ -7,7 +7,7 @@ class Customer(models.Model):
     phone = models.CharField(max_length=20, blank=True)
     email = models.EmailField(blank=True)
     def __str__(self):
-        return f"{self.name} (ID: {self.id})"
+        return f"Name: {self.name}, Email: {self.email}, Phone: {self.phone}"
 
 class Sale(models.Model):
     cashier = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)

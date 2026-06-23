@@ -17,13 +17,18 @@
   </div>
 </form>
 
-<form method="post" action="{% url 'sales:checkout' %}">
+<form id="checkoutForm" method="post" action="{% url 'sales:checkout' %}">
   {% csrf_token %}
 
   <h4>Customer Details (Optional)</h4>
   <input class="form-control mb-2" type="text" name="name" placeholder="Name" />
+  <div class="invalid-feedback">Name is required if buying ≥ 10 items.</div>
+
   <input class="form-control mb-2" type="text" name="phone" placeholder="Phone" />
+  <div class="invalid-feedback">Phone is required if buying ≥ 10 items.</div>
+
   <input class="form-control mb-2" type="email" name="email" placeholder="Email" />
+  <div class="invalid-feedback">Email is required if buying ≥ 10 items.</div>
 
   <h4>Products</h4>
   <table class="table table-striped">
@@ -42,7 +47,7 @@
         <td>{{ p.price }}</td>
         <td>{{ p.quantity }}</td>
         <td>
-          <input class="form-control" type="number" name="product_{{ p.id }}" min="0" max="{{ p.quantity }}" value="0">
+          <input class="form-control product-input" type="number" name="product_{{ p.id }}" min="0" max="{{ p.quantity }}" value="0">
         </td>
       </tr>
       {% empty %}
@@ -56,6 +61,58 @@
   <button class="btn btn-primary" type="submit">Checkout</button>
 </form>
 
-{% endif %}
+<!-- Validation Script -->
+<script>
+function checkCustomerRequirement() {
+    let requiresCustomer = false;
 
+    // Check if any product quantity >= 10
+    document.querySelectorAll(".product-input").forEach(input => {
+        if (parseInt(input.value) >= 10) {
+            requiresCustomer = true;
+        }
+    });
+
+    // Toggle validation state on customer fields
+    ["name", "phone", "email"].forEach(field => {
+        let input = document.querySelector(`input[name='${field}']`);
+        if (requiresCustomer && !input.value.trim()) {
+            input.classList.add("is-invalid");
+        } else {
+            input.classList.remove("is-invalid");
+        }
+    });
+
+    return requiresCustomer;
+}
+
+// Run check on every product quantity change
+document.querySelectorAll(".product-input").forEach(input => {
+    input.addEventListener("input", checkCustomerRequirement);
+});
+
+// Also run check on customer field typing (to clear warning as user fills in)
+["name", "phone", "email"].forEach(field => {
+    let input = document.querySelector(`input[name='${field}']`);
+    input.addEventListener("input", checkCustomerRequirement);
+});
+
+// Final check on submit
+document.getElementById("checkoutForm").addEventListener("submit", function(e) {
+    if (checkCustomerRequirement()) {
+        let valid = true;
+        ["name", "phone", "email"].forEach(field => {
+            let input = document.querySelector(`input[name='${field}']`);
+            if (!input.value.trim()) {
+                valid = false;
+            }
+        });
+        if (!valid) {
+            e.preventDefault(); // stop form submission
+        }
+    }
+});
+</script>
+
+{% endif %}
 {% endblock %}

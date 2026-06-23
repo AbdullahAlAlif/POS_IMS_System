@@ -254,7 +254,7 @@
                         <div class="text-truncate me-2">
                             <div class="small text-white text-opacity-50">Logged in as</div>
                             <div class="fw-bold text-white text-truncate"
-                                title="{{ user.email|default:user.username }}">{{ user.email|default:user.username }}
+                                title="{{ user.username|default:user.email }}">{{ user.username|default:user.email }}
                             </div>
                         </div>
                         <a href="{% url 'logout' %}" class="btn btn-sm btn-outline-light border-0 px-2" title="Logout">

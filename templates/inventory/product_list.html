@@ -12,6 +12,15 @@
 {% else %}
 
 <h2 class="mb-3">Products</h2>
+
+<!-- Search Bar -->
+<form method="get" class="mb-3">
+  <div class="input-group">
+    <input type="text" name="q" class="form-control" placeholder="Search product..." value="{{ search_query }}">
+    <button class="btn btn-outline-secondary" type="submit">Search</button>
+  </div>
+</form>
+
 <a class="btn btn-primary mb-2" href="{% url 'inventory:product_add' %}">Add Product</a>
 <a class="btn btn-secondary mb-2" href="{% url 'inventory:category_list' %}">Categories</a>
 
@@ -41,7 +50,7 @@
       </tr>
     {% empty %}
       <tr>
-        <td colspan="6" class="text-center text-muted">No products yet.</td>
+        <td colspan="6" class="text-center text-muted">No products found.</td>
       </tr>
     {% endfor %}
   </tbody>
@@ -50,5 +59,3 @@
 {% endif %}
 
 {% endblock %}
-
-

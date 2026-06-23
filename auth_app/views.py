@@ -16,7 +16,7 @@ def register_view(request):
     else:
         initial_data = {'username': '', 'email': '', 'password1': '', 'password2': ''}
         form = CustomUserCreationForm(initial=initial_data)
-    return render(request, 'auth/register.html',{'form':form})
+    return render(request, 'authentication/auth/register.html',{'form':form})
 
 @guest
 def login_view(request):
@@ -29,7 +29,7 @@ def login_view(request):
     else:
         initial_data = {'username':'', 'password':''}
         form = AuthenticationForm(initial=initial_data)
-    return render(request, 'auth/login.html',{'form':form}) 
+    return render(request, 'authentication/auth/login.html',{'form':form})
 
 @auth
 def dashboard_view(request):

@@ -9,8 +9,17 @@ def home(request):
     return redirect('inventory:product_list')
 
 def product_list(request):
-    products = Product.objects.all()
-    return render(request, 'inventory/product_list.html', {'products': products})
+    search_query = request.GET.get('q', '')
+    
+    if search_query:
+        products = Product.objects.filter(name__icontains=search_query)
+    else:
+        products = Product.objects.all()
+    
+    return render(request, 'inventory/product_list.html', {
+        'products': products,
+        'search_query': search_query,
+    })
 
 def product_add(request):
     if request.method == 'POST':
