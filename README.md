@@ -1,6 +1,6 @@
-# Stationery Shop Management (Django)
+# Shop Management (Django)
 
-This is a starter Django project for a Stationery Shop Management system prepared for a university assignment.
+This is a starter Django project for a  Shop Management system prepared for a university assignment.
 
 ## Quick start
 
