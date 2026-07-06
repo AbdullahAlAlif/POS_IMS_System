@@ -6,7 +6,7 @@ This system centralizes all business operations into a single platform for smoot
 
 ---
 
-![UI PIC](Images\image.png)
+![UI PIC](Images/image.png)
 
 
 ## 🚀 Core Features
